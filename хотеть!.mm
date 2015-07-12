@@ -102,5 +102,6 @@
 </node>
 <node TEXT="readme.md" ID="ID_714628013" CREATED="1436376423012" MODIFIED="1436376423012"/>
 </node>
+<node TEXT="&#x43d;&#x43e;&#x432;&#x430;&#x44f; &#x432;&#x435;&#x442;&#x43e;&#x447;&#x43a;&#x430;" POSITION="right" ID="ID_784959448" CREATED="1436691229227" MODIFIED="1436691231618"/>
 </node>
 </map>
