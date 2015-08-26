@@ -1,39 +1,59 @@
-#IncludeAgain %A_ScriptDir%\muve.ahk
-n=1
-gui, font, s15
-Gui, Add, Text,x10 y15, ѕройдите весь лабиринт.
+startX=250
+startY=70
+
+Global hitboxHeight=10
+Global hitboxWight=10
+
+widowX=500
+widowY=400
+
+Global shag=10
+
+periodGuiUpdateTimer:=100
+
+Global backcolor=0xFF4500
+Global colorsravnenia=0x000000
+
+Global otstupDlaVihodaIzUglov:=1
+
+Global pixelOffSetX:=2
+Global pixelOffSety:=25
+;==============================================================================
+curentX:=startX
+curentY:=startY
+;===============================================================================
 
 Gui, Color, %backcolor%
+
 
 Gui, Add, Picture,  h50 w80 x210 y60, %A_ScriptDir%\content\1.jpg
 Gui, Add, Picture,  h50 w80 x210 y350, %A_ScriptDir%\content\1.jpg
 
-Gui, Add, Picture,  h50 w40 x230 y90, %A_ScriptDir%\content\1.jpg
-Gui, Add, Picture,  h50 w40 x230 y320, %A_ScriptDir%\content\1.jpg
+Gui, Add, Picture,  h60 w20 x220 y90, %A_ScriptDir%\content\1.jpg
+Gui, Add, Picture,  h60 w20 x260 y310, %A_ScriptDir%\content\1.jpg
 
-Gui, Add, Picture,  h20 w200 x70 y130, %A_ScriptDir%\content\1.jpg
-Gui, Add, Picture,  h20 w200 x230 y310, %A_ScriptDir%\content\1.jpg
+Gui, Add, Picture,  h20 w190 x230 y130, %A_ScriptDir%\content\1.jpg
+Gui, Add, Picture,  h20 w180 x100 y310, %A_ScriptDir%\content\1.jpg
+Gui, Add, Picture,  h20 w100 x10 y60, %A_ScriptDir%\content\1.jpg
+Gui, Add, Picture,  h10 w100 x390 y60, %A_ScriptDir%\content\1.jpg
+Gui, Add, Picture,  h10 w100 x10 y380, %A_ScriptDir%\content\1.jpg
+Gui, Add, Picture,  h20 w100 x390 y370, %A_ScriptDir%\content\1.jpg
 
-Gui, Add, Picture,  h70 w30 x70 y150, %A_ScriptDir%\content\1.jpg
-Gui, Add, Picture,  h70 w30 x400 y240, %A_ScriptDir%\content\1.jpg
+Gui, Add, Picture,  h320 w30 x10 y60, %A_ScriptDir%\content\1.jpg
+Gui, Add, Picture,  h310 w30 x460 y60, %A_ScriptDir%\content\1.jpg
+Gui, Add, Picture,  h170 w50 x90 y60, %A_ScriptDir%\content\1.jpg
+Gui, Add, Picture,  h80 w30 x90 y310, %A_ScriptDir%\content\1.jpg
+Gui, Add, Picture,  h70 w30 x390 y60, %A_ScriptDir%\content\1.jpg
+Gui, Add, Picture,  h170 w50 x370 y220, %A_ScriptDir%\content\1.jpg
 
-Gui, Add, Picture,  h20 w360 x70 y220, %A_ScriptDir%\content\1.jpg
-
+Gui, Add, Picture,  h20 w330 x90 y220, %A_ScriptDir%\content\1.jpg
 Gui, Add, Picture,  h10 w10 x%curentX% y%curentY%, %A_ScriptDir%\content\00.jpg
 
+Gui, Show, h%widowY% w%widowX%, Masana
 SetTimer, GuiUpdateTimer, %periodGuiUpdateTimer%
-Gui, Show, h400 w500, Untitled
 return
 
-;=======================================================
-;секундомер
-GuiUpdateTimer:
-Gui, Submit , NoHide
-guicontrol , move , %A_ScriptDir%\content\00.jpg , x%curentX% y%curentY%
 
-return
-;===============================================================================
-;===============================================================================
 ;===============================================================================
 shagVverh(curentXlocal,curentYlocal,napravlenie)
 {
@@ -66,7 +86,7 @@ if ((CheckColorLeft=colorsravnenia)and(CheckColorRight=colorsravnenia))
 Else
 	{
 curentYlocal:=curentYlocal
-;MsgBox levaya to4ka%Xproveraemoitochkileft%, %Yproveraemoitochki% %CheckColorLeft%`n pravaya to4ka %Xproveraemoitochkiright%, %Yproveraemoitochki% %CheckColorRight%`n sravnivl s%colorsravnenia%
+;MsgBox ERROR levaya to4ka%Xproveraemoitochkileft%, %Yproveraemoitochki% %CheckColorLeft%`n pravaya to4ka %Xproveraemoitochkiright%, %Yproveraemoitochki% %CheckColorRight%`n sravnivl s%colorsravnenia%
 	}
 	
 return 	curentYlocal
@@ -104,7 +124,7 @@ if ((CheckColorVerh=colorsravnenia)and(CheckColorNiz=colorsravnenia))
 Else
 	{
 curentXlocal:=curentXlocal
-;MsgBox levaya to4ka%Xproveraemoitochki%, %Yproveraemoitochkiverh% %CheckColorverh%`n pravaya to4ka %Xproveraemoitochki%, %Yproveraemoitochkiniz% %CheckColorniz%`n sravnivl s%colorsravnenia%
+;MsgBox ERROR levaya to4ka%Xproveraemoitochki%, %Yproveraemoitochkiverh% %CheckColorverh%`n pravaya to4ka %Xproveraemoitochki%, %Yproveraemoitochkiniz% %CheckColorniz%`n sravnivl s%colorsravnenia%
 	}
 	
 return 	curentXlocal
@@ -113,28 +133,30 @@ return 	curentXlocal
 ;===============================================================================
 ;===============================================================================
 ;===============================================================================
-
+#IfWinActive Masana
 
 #InstallKeybdHook  
-~w:: ;w
+~SC011:: ;w
 curentY:=shagVverh(curentX,curentY,"vverh")
 return
 
-~s:: ;s
+~SC01F:: ;s
 curentY:=shagVverh(curentX,curentY,"vniz")
 return
 
-~a:: ;a
+~SC01E:: ;a
 curentX:=shagVbok(curentX,curentY,"vlevo")
 return
 
 
-~d:: ;d
+~SC020:: ;d
 curentX:=shagVbok(curentX,curentY,"vpravo")
 return
 
+;=======================================================
+;секундомер
+GuiUpdateTimer:
+Gui, Submit , NoHide
+guicontrol , move , %A_ScriptDir%\content\00.jpg , x%curentX% y%curentY%
 
-
-
-
-
+return
